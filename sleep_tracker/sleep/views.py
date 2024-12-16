@@ -1,64 +1,24 @@
-import io
-import base64
-
-from django.db.models import Q
-
-from .forms import UserRegistrationForm
 from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
-from .forms import SleepRecordForm
-from .models import SleepRecord, UserProfile
 from datetime import time
-from datetime import datetime, timedelta
 import csv
-from django.http import HttpResponse
-import matplotlib.pyplot as plt
 from .models import Reminder
 from .forms import ReminderForm
-from django.shortcuts import render
 from .forms import UserRegistrationForm, SleepRecordForm
 from django.contrib.auth.decorators import user_passes_test
-from django.shortcuts import render
-from .models import SleepRecord
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from .forms import DietHabitForm, PhysicalActivityForm
-from .models import DietHabit, PhysicalActivity
 from django.http import HttpResponse
-from .models import SleepRecord, DietHabit, PhysicalActivity
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import SleepRecord, Friendship
-from django.contrib.auth.decorators import login_required
-from django.db import models
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import SleepRecord, Friendship, UserProfile
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import SleepRecord, Friendship
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
-from django.db.models import Q
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .models import Friendship, UserProfile
-from django.contrib.auth.models import User
-from django.shortcuts import render
 from django.db.models import Q
 from .models import Friendship, SleepRecord
-from django.contrib.auth.decorators import login_required
-import matplotlib.pyplot as plt
-import io
-import base64
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from .models import UserProfile, SleepRecord, DietHabit, PhysicalActivity
 from datetime import datetime, timedelta
 from .utils import generate_sleep_chart, generate_recommendations
+
 
 
 @login_required
@@ -279,12 +239,12 @@ def custom_logout(request):
     return redirect('login')  # Перенаправление на страницу входа
 
 
-
-
 @login_required
 def dashboard(request):
-    # Получаем профиль пользователя, создавая его при необходимости
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user = request.user
+
+    # Проверка существования UserProfile и создание его, если он отсутствует
+    profile, created = UserProfile.objects.get_or_create(user=user)
 
     filter_period = request.GET.get('filter', 'all')
 
