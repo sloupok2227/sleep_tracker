@@ -1,0 +1,19 @@
+<div class="container mt-5">
+    <h2>Напоминания</h2>
+
+    <h3>Добавить напоминание</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Добавить</button>
+    </form>
+
+    <h3 class="mt-5">Ваши напоминания</h3>
+    <ul>
+        {% for reminder in reminders %}
+        <li>{{ reminder.reminder_time }} - {{ reminder.message }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary mt-3">Назад</a>
+</div>

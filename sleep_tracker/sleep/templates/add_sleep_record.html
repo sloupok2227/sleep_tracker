@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Добавить запись о сне{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Заголовок -->
+    <h2 class="text-center text-success mb-4">Добавить запись о сне</h2>
+
+    <!-- Форма с центрированием -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <form method="post" action="" class="p-4 border rounded shadow-sm bg-white">
+                {% csrf_token %}
+
+                <!-- Поле: Дата -->
+                <div class="mb-3">
+                    <label for="id_date" class="form-label">Дата:</label>
+                    {{ form.date }}
+                </div>
+
+                <!-- Поле: Время сна -->
+                <div class="mb-3">
+                    <label for="id_sleep_time" class="form-label">Время сна:</label>
+                    {{ form.sleep_time }}
+                </div>
+
+                <!-- Поле: Время пробуждения -->
+                <div class="mb-3">
+                    <label for="id_wake_time" class="form-label">Время пробуждения:</label>
+                    {{ form.wake_time }}
+                </div>
+
+                <!-- Поле: Количество пробуждений -->
+                <div class="mb-3">
+                    <label for="id_wake_ups" class="form-label">Количество пробуждений:</label>
+                    {{ form.wake_ups }}
+                </div>
+
+                <!-- Поле: Привычки -->
+                <div class="mb-3">
+                    <label for="id_habits" class="form-label">Привычки:</label>
+                    {{ form.habits }}
+                </div>
+
+                <!-- Поле: Видимость записи -->
+                <div class="mb-3">
+                    <label for="id_visibility" class="form-label">Видимость записи:</label>
+                    {{ form.visibility }}
+                </div>
+
+                <!-- Кнопка сохранения -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </div>
+            </form>
+
+            <!-- Ссылка назад -->
+            <div class="text-center mt-3">
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Назад к панели управления</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

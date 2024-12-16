@@ -1,0 +1,26 @@
+<div class="container mt-5">
+    <h2 class="text-success text-center">Анализ сна</h2>
+
+    <div class="row">
+        <div class="col-12 col-md-6 mb-4">
+            <h3 class="text-success">Средняя продолжительность сна</h3>
+            <p>Средняя продолжительность сна: <span class="fw-bold">{{ avg_duration|floatformat:2 }}</span> часов</p>
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <h3 class="text-success">Наилучший/наихудший день</h3>
+            <p>Наилучший день: <span class="fw-bold">{{ best_day.date }}</span> ({{ best_day.sleep_duration }})</p>
+            <p>Наихудший день: <span class="fw-bold">{{ worst_day.date }}</span> ({{ worst_day.sleep_duration }})</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-success text-center">Распределение времени сна</h3>
+            <img src="data:image/png;base64,{{ chart }}" alt="Распределение времени сна" class="img-fluid rounded shadow mt-3">
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Назад</a>
+    </div>
+</div>

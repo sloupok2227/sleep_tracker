@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Ваши Пищевые Привычки</h2>
+
+    <!-- Таблица пищевых привычек -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Еда</th>
+                    <th>Калории</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for habit in habits %}
+                <tr>
+                    <td>{{ habit.date }}</td>
+                    <td>{{ habit.meal_time }}</td>
+                    <td>{{ habit.food }}</td>
+                    <td>{{ habit.calories }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Нет записей о пищевых привычках.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Кнопка назад -->
+    <div class="mt-3 text-center">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Назад к панели управления</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}Панель управления{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Заголовок -->
+    <div class="row">
+        <div class="col-12 text-center mb-4">
+            <h2 class="text-success fw-bold">Панель управления</h2>
+        </div>
+    </div>
+
+    <!-- Кнопки управления -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-12 d-flex flex-wrap justify-content-center">
+            <a href="{% url 'add_sleep_record' %}" class="btn btn-success m-2">Добавить запись о сне</a>
+            <a href="{% url 'sort_records' %}" class="btn btn-info m-2">Сортировка записей</a>
+            <a href="{% url 'add_diet_habit' %}" class="btn btn-success m-2">Добавить пищевую привычку</a>
+            <a href="{% url 'add_physical_activity' %}" class="btn btn-success m-2">Добавить физическую активность</a>
+            <a href="{% url 'view_diet_habits' %}" class="btn btn-info m-2">Пищевые привычки</a>
+            <a href="{% url 'view_physical_activities' %}" class="btn btn-info m-2">Физическая активность</a>
+        </div>
+    </div>
+
+    <!-- График сна -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-success mb-3">График продолжительности сна</h3>
+            <div class="text-center">
+                <img src="data:image/png;base64,{{ chart }}" alt="График сна" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- Рекомендации -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-success mb-3">Рекомендации</h3>
+            <ul class="list-group">
+                {% for recommendation in recommendations %}
+                <li class="list-group-item">{{ recommendation }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Диетические привычки -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-success mb-3">Ваши диетические привычки</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Дата</th>
+                            <th>Еда</th>
+                            <th>Калории</th>
+                            <th>Время приема пищи</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for habit in diet_habits %}
+                        <tr>
+                            <td>{{ habit.date }}</td>
+                            <td>{{ habit.food }}</td>
+                            <td>{{ habit.calories }}</td>
+                            <td>{{ habit.meal_time }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Физическая активность -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <h3 class="text-success mb-3">Ваша физическая активность</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Дата</th>
+                            <th>Тип активности</th>
+                            <th>Длительность</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for activity in physical_activities %}
+                        <tr>
+                            <td>{{ activity.date }}</td>
+                            <td>{{ activity.activity_type }}</td>
+                            <td>{{ activity.duration }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Записи о сне -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-success mb-3">Ваши записи о сне</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered text-center">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Дата</th>
+                            <th>Время сна</th>
+                            <th>Время пробуждения</th>
+                            <th>Количество пробуждений</th>
+                            <th>Привычки</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in sleep_records %}
+                        <tr>
+                            <td>{{ record.date }}</td>
+                            <td>{{ record.sleep_time }}</td>
+                            <td>{{ record.wake_time }}</td>
+                            <td>{{ record.wake_ups }}</td>
+                            <td>{{ record.habits }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

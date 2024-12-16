@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Ваши Физические Активности</h2>
+
+    <!-- Таблица физических активностей -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-primary">
+                <tr>
+                    <th>Дата</th>
+                    <th>Тип Активности</th>
+                    <th>Длительность</th>
+                    <th>Калории</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity in activities %}
+                <tr>
+                    <td>{{ activity.date }}</td>
+                    <td>{{ activity.activity_type }}</td>
+                    <td>{{ activity.duration }}</td>
+                    <td>{{ activity.calories_burned }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">Нет записей о физических активностях.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Кнопка назад -->
+    <div class="mt-3 text-center">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Назад к панели управления</a>
+    </div>
+</div>
+{% endblock %}
