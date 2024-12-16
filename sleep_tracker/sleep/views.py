@@ -54,7 +54,11 @@ import io
 import base64
 from django.contrib.auth import logout
 from django.shortcuts import redirect
-
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile, SleepRecord, DietHabit, PhysicalActivity
+from datetime import datetime, timedelta
+from .utils import generate_sleep_chart, generate_recommendations
 
 
 @login_required
@@ -275,9 +279,13 @@ def custom_logout(request):
     return redirect('login')  # Перенаправление на страницу входа
 
 
+
+
 @login_required
 def dashboard(request):
-    profile = request.user.userprofile
+    # Получаем профиль пользователя, создавая его при необходимости
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
     filter_period = request.GET.get('filter', 'all')
 
     # Инициализация переменных для данных
@@ -287,18 +295,14 @@ def dashboard(request):
 
     if filter_period == 'week':
         start_date = datetime.today() - timedelta(days=7)
-        sleep_records = SleepRecord.objects.filter(profile=profile, date__gte=start_date)
+        sleep_records = sleep_records.filter(date__gte=start_date)
         diet_habits = diet_habits.filter(date__gte=start_date).order_by('-date')
         physical_activities = physical_activities.filter(date__gte=start_date).order_by('-date')
     elif filter_period == 'month':
         start_date = datetime.today() - timedelta(days=30)
-        sleep_records = SleepRecord.objects.filter(profile=profile, date__gte=start_date)
+        sleep_records = sleep_records.filter(date__gte=start_date)
         diet_habits = diet_habits.filter(date__gte=start_date).order_by('-date')
         physical_activities = physical_activities.filter(date__gte=start_date).order_by('-date')
-    else:
-        sleep_records = SleepRecord.objects.filter(profile=profile)
-        diet_habits = diet_habits.order_by('-date')
-        physical_activities = physical_activities.order_by('-date')
 
     chart = generate_sleep_chart(sleep_records)
     recommendations = generate_recommendations(sleep_records)
@@ -311,7 +315,6 @@ def dashboard(request):
         'recommendations': recommendations,
         'filter_period': filter_period,
     })
-
 
 
 def generate_recommendations(records):
