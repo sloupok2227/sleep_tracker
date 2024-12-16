@@ -1,1 +1,1 @@
-web: gunicorn sleep_tracker.sleep_tracker.wsgi:application --chdir sleep_tracker
+web: gunicorn sleep_tracker.wsgi:application --chdir sleep_tracker
